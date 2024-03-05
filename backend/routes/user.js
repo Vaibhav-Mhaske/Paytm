@@ -1,7 +1,7 @@
 const express = require("express"); // Importing the Express framework
 const zod = require("zod"); // Importing the Zod library for data validation
 const jwt = require("jsonwebtoken"); // Importing the JSON Web Token library
-const { User } = require("../db"); // Importing the User model from the "../db" file
+const { User, Account } = require("../db"); // Importing the User model from the "../db" file
 const JWT_SECRET = require("../config"); // Importing the JWT_SECRET from the "../config" file
 const { authMiddleware } = require("../middleware")
 
@@ -36,8 +36,19 @@ router.post("/signup", async (req, res) => {
     }
 
     // Creating a new user in the database with the provided details
-    const dbUser = await User.create(body);
+    const dbUser = await User.create({
+        username: req.body.username,
+        password: req.body.password,
+        firstName: req.body.firstName,
+        lastName: req.body.lastName
+    });
+
     const userId = dbUser._id;
+
+    await Account.create({
+        userId,
+        balance: 1 + Math.random() * 10000
+    })
 
     // Generating a JSON Web Token (JWT) with the user ID
     const token = jwt.sign({
