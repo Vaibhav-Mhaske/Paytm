@@ -1,21 +1,54 @@
-// Importing the mongoose library
+// backend/db.js
 const mongoose = require('mongoose');
 
-// Connecting to the MongoDB database using the provided connection string
-mongoose.connect("mongodb+srv://vaibhav:8791435484@cluster0.qenvmnm.mongodb.net/paytm")
+mongoose.connect("mongodb://localhost:27017/paytm")
 
-// Defining the schema for the user collection in the database
-const mongooseSchema = mongoose.Schema({
-    username: String,
-    password: String,
-    firstName: String,
-    lastName: String
-})
+// Create a Schema for Users
+const userSchema = new mongoose.Schema({
+    username: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true,
+        lowercase: true,
+        minLength: 3,
+        maxLength: 30
+    },
+    password: {
+        type: String,
+        required: true,
+        minLength: 6
+    },
+    firstName: {
+        type: String,
+        required: true,
+        trim: true,
+        maxLength: 50
+    },
+    lastName: {
+        type: String,
+        required: true,
+        trim: true,
+        maxLength: 50
+    }
+});
 
-// Creating a model for the user schema
-const User = mongoose.model('User', mongooseSchema);
+const accountSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId, // Reference to User model
+        ref: 'User',
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
+    }
+});
 
-// Exporting the User model to be used in other files
+const Account = mongoose.model('Account', accountSchema);
+const User = mongoose.model('User', userSchema);
+
 module.exports = {
-    User
-}
+    User,
+    Account,
+};
