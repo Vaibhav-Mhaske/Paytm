@@ -18,7 +18,6 @@ Welcome to the Payment App Prototype repository! This project is a web applicati
 - Database: MongoDB, Mongoose
 - Authentication: JSON Web Tokens (JWT)
 - Form Validation: Zod
-- Deployment: [Heroku](https://www.heroku.com/) (Example deployment)
 
 ## Installation
 
