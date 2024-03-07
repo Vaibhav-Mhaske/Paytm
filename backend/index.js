@@ -6,9 +6,9 @@ const rootRouter = require("./routes/index");
 const app = express();
 
 // Middleware setup
-app.use(express.json()); // Parse incoming JSON data
 app.use(cors()); // Enable Cross-Origin Resource Sharing (CORS)
-
+app.use(express.json()); // Parse incoming JSON data
+//
 // Mounting the main router at the "/api/v1" endpoint
 app.use("/api/v1", rootRouter);
 

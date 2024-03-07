@@ -2,14 +2,14 @@ const express = require("express"); // Importing the Express framework
 const zod = require("zod"); // Importing the Zod library for data validation
 const jwt = require("jsonwebtoken"); // Importing the JSON Web Token library
 const { User, Account } = require("../db"); // Importing the User model from the "../db" file
-const JWT_SECRET = require("../config"); // Importing the JWT_SECRET from the "../config" file
+const { JWT_SECRET } = require("../config"); // Importing the JWT_SECRET from the "../config" file
 const { authMiddleware } = require("../middleware")
 
 const router = express.Router(); // Creating an instance of the Express Router
 
 // Defining a schema for user signup data validation using Zod
 const signupSchema = zod.object({
-    username: zod.string(),
+    username: zod.string().email(),
     password: zod.string(),
     firstName: zod.string(),
     lastName: zod.string()
