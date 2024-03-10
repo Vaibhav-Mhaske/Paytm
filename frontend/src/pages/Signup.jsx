@@ -10,6 +10,7 @@ import { SubHeading } from "../components/SubHeading";
 
 
 export const Signup = () => {
+  const [lastName, setLastName] = useState("")
   const [firstName, setFirstName] = useState("")
   return <div className="bg-slate-300 h-screen flex justify-center">
     <div className="flex flex-col justify-center">
@@ -19,6 +20,9 @@ export const Signup = () => {
         <InputBox onChange={(e) => {
           setFirstName(e.target.value);
         }} placeholder="John" label={"First Name"} />
+        <InputBox OnChange={(e) => {
+          setLastName(e.target.value)
+        }} placeholder="Doe" label={"Last Name"} />
       </div>
     </div>
   </div>
