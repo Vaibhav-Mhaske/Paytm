@@ -1,7 +1,7 @@
 // import axios from "axios";
 // import { useState } from "react";
 import { useState } from "react";
-import { ButtonWarning } from "../components/BottomWarning";
+import { BottomWarning } from "../components/BottomWarning";
 import { Button } from "../components/Button";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
@@ -41,7 +41,7 @@ export const Signup = () => {
           <Button onClick={async () => {
           }} label={"Sign up"} />
         </div>
-        <ButtonWarning label={"You already have an account"} buttonText={"Sign In"} to={"/signin"} />
+        <BottomWarning label={"You already have an account"} buttonText={"Sign In"} to={"/signin"} />
       </div>
     </div>
   </div>
