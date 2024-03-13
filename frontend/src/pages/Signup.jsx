@@ -1,19 +1,19 @@
-// import axios from "axios";
-// import { useState } from "react";
+import axios from "axios";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { BottomWarning } from "../components/BottomWarning";
 import { Button } from "../components/Button";
 import { Heading } from "../components/Heading";
 import { InputBox } from "../components/InputBox";
 import { SubHeading } from "../components/SubHeading";
-// import { useNavigat } from "react-router-dom";
 
 
 export const Signup = () => {
-  const [lastName, setLastName] = useState("")
   const [firstName, setFirstName] = useState("")
-  const [email, setEmail] = useState("")
+  const [lastName, setLastName] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const navigate = useNavigate()
 
   return <div className="bg-slate-300 h-screen flex justify-center">
     <div className="flex flex-col justify-center">
@@ -22,26 +22,34 @@ export const Signup = () => {
         <SubHeading label={"Enter Your Information to Create an Account"} />
 
         <InputBox onChange={(e) => {
-          setFirstName(e.target.value);
+          setFirstName(e.target.value)
         }} placeholder="John" label={"First Name"} />
 
-        <InputBox OnChange={(e) => {
+        <InputBox onChange={(e) => {
           setLastName(e.target.value)
-        }} placeholder="Doe" label={"Last Name"} />
+        }} placeholder="John" label={"Last Name"} />
 
         < InputBox onChange={(e) => {
-          setEmail(e.target.value)
-        }} placeholder="Johndoe@gmail.com" label={"Email"} />
+          setUsername(e.target.value)
+        }} placeholder="Johndoe@gmail.com" label={"Email/Username"} />
 
         < InputBox onChange={(e) => {
           setPassword(e.target.value)
         }} placeholder={"Enter Your Password"} label={"Password"} />
 
-        <div className="pt-2">
+        <div className="pt-4">
           <Button onClick={async () => {
+            const respose = await axios.post("http://localhost:3000/api/v1/user/signup", {
+              username,
+              firstName, // works the same as not using the key value pair because if key and value are same javascript automatically assumes.
+              lastName,
+              password
+            })
+            localStorage.setItem("token", respose.data.token)
+            navigate("/dashboard")
           }} label={"Sign up"} />
         </div>
-        <BottomWarning label={"You already have an account"} buttonText={"Sign In"} to={"/signin"} />
+        <BottomWarning label={"You already have an account"} linkText={"Sign In"} to={"/signin"} />
       </div>
     </div>
   </div>

@@ -99,7 +99,7 @@ router.post("/signin", async (req, res) => {
 
 const updateBodySchema = zod.object({
     username: zod.string().optional(),
-    firtName: zod.string().optional(),
+    firstName: zod.string().optional(),
     lastName: zod.string().optional()
 })
 
@@ -112,7 +112,7 @@ router.put("/", authMiddleware, async (req, res) => {
     }
 
     await User.updateOne({
-        _id: req_userId
+        _id: req.userId
     }, req.body)
 
     res.json({
@@ -123,21 +123,23 @@ router.put("/", authMiddleware, async (req, res) => {
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
 
-    const users = await User.findOne({
+    const users = await User.find({
         $or: [{
             firstName: {
-                "$regex": filter
+                "$regex": filter,
+                "$options": "i"
             }
         }, {
             lastName: {
-                "$regex": filter
+                "$regex": filter,
+                "$options": "i"
             }
         }]
     })
     res.json({
         user: users.map(user => ({
             username: user.username,
-            firstName: user.firstname,
+            firstName: user.firstName,
             lastName: user.lastName,
             _id: user._id
         }))
